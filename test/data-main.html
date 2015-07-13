@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>基本功能使用</title>
+</head>
+<body>
+<div id="log"></div>
+<script>
+
+var log = (function () {
+  var el = document.getElementById('log');
+  return function (msg) {
+  el.innerHTML = el.innerHTML + ('<br>' + msg);
+  };
+})();
+</script>
+<script data-main="test/js/app.js" src="/kao-lite.js"></script>
+</body>
+</html>

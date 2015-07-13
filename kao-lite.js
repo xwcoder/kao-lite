@@ -15,7 +15,7 @@
     //获取当前script节点, 文件必须直接在页面中引入
     var script = (function () {
         var scripts = doc.getElementsByTagName( 'script' );
-        return nodes[nodes.length - 1];
+        return scripts[scripts.length - 1];
     })();
 
     var isType = function (type) {
@@ -34,7 +34,7 @@
                 o[p] = c[p];
             }
         }
-    };
+    }
 
     var emiter = {
 
@@ -118,6 +118,8 @@
 
     var loading = {};
 
+    var cssuris = {};
+
     var modules = {};
 
     function getModuleMeta (id) {
@@ -127,11 +129,11 @@
             mod = {path: id}
         }
         return mod;
-    };
+    }
 
     function absoluteURI (uri) {
 
-        var uri = path || '';
+        var uri = uri || '';
 
         if ( !REG_HAS_PROTOCAL.test(uri) ) {
 
@@ -143,12 +145,12 @@
             }
         }
         return uri;
-    };
+    }
 
     function loadCss (uri, charset) {
         var node = doc.createElement( 'link' );
         node.type = 'text/css';
-        node.rel = stylesheet;
+        node.rel = 'stylesheet';
         node.href = uri;
         node.setAttribute('href', uri);
 
@@ -157,7 +159,7 @@
         }
 
         script.parentNode.insertBefore(node, script);
-    };
+    }
 
     // http://goo.gl/U7ANEY
     function loadScript (uri, charset, callback ) {
@@ -166,24 +168,24 @@
         var self = this;
 
         var node = doc.createElement('script');
-        node.type = text/javascript;
+        node.type = 'text/javascript';
         node.async = true;
 
         if ( charset ) {
           node.charset = charset;
         }
 
-        node.src = url;
+        node.src = uri;
 
         function onLoad () {
             node.onload = node.onreadystatechange = null;
             script.parentNode.removeChild(node);
-            script = null;
+            node = null;
 
             callback();
         }
 
-        if ( 'onload' in script ) {
+        if ( 'onload' in node ) {
             node.onload = onLoad;
         } else {
             node.onreadystatechange = function () {
@@ -220,21 +222,28 @@
                 mod = getModuleMeta(deps[i]);
                 uri = absoluteURI(mod.path);
                 requires = mod.requires;
+                charset = mod.charset;
 
                 if ( mod.type == 'css' || extname(uri) == '.css' ) {
-                    loadCss(uri, mod.charset);
+                    if ( !cssuris[uri] ) {
+                        cssuris[uri] = noopObj;
+                        loadCss(uri, mod.charset);
+                    }
                     continue;
                 }
 
                 if ( !loaded[uri] ) {
 
-                    depsReady += =1;
+                    depsReady += 1;
                     emiter.on(uri, depReadyhandler);
 
                     if ( !loading[uri] ) {
-
                         fetch = (function (uri, charset) {
                             return function () {
+                                if ( loading[uri] || loaded[uri] ) {
+                                    return;
+                                }
+
                                 loading[uri] = noopObj;
                                 loadScript(uri, charset, function () {
                                     delete loading[uri];
@@ -297,7 +306,7 @@
         extend(config, o);
     };
 
-    window.kao = kao;
+    win.kao = kao;
 
     if ( ext = script.getAttribute('data-path') ) {
         config.path = ext;
