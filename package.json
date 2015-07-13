@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/xwcoder/kao-lite/issues"
   },
-  "homepage": "https://github.com/xwcoder/kao-lite"
+  "homepage": "https://github.com/xwcoder/kao-lite",
+  "devDependencies": {
+    "express": "^4.13.1"
+  }
 }
