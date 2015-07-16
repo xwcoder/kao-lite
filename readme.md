@@ -71,6 +71,14 @@ Type: `function`
 
 callback execute after modules loaded
 
+### kao.ready(fn)
+
+#### fn
+
+Type: `function`
+
+callback execute after domready
+
 
 ## License
 
