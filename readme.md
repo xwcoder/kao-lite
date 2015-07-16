@@ -3,6 +3,7 @@
 > lite version of [kao](https://github.com/xwcoder/kao)
 
 differences between kao.js:
+
 1. remove dependence on [`messagebug`](https://github.com/xwcoder/messagebus)
 2. remove `coreLib`
 3. remove `DEBUG`
