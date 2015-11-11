@@ -109,7 +109,7 @@
 
     var config = {
         path: (function () {
-            /^(.+:\/\/.+)(?:\/)/.exec(script.src);
+            /^(.+?:\/\/.+?)(?:[\/\?#])/.exec(script.src);
             return RegExp.$1;
         })()
     };
