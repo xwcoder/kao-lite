@@ -7,7 +7,7 @@
     var REG_MULTI_SLASH = /([^:])\/+\//g;
     var REG_DOUBLE_SLASH = /\/[^\/]+\/\.\.\//;
     var REG_HAS_EXPLICIT_PROTOCAL = /^[^:\/]+:\/\//;
-    var REG_HAS_PROTOCAL = /^(?:[a-zA-Z]+?:)?(\/\/.+?)/
+    var REG_HAS_PROTOCAL = /^(?:[a-zA-Z]+?:)?\/\/.+?/
     var REG_DIR_NAME = /\/[^\/]*\.[^\/]*$/;
     var REG_EXTNAME = /(\.[^\.]+)(?=[\?#]|$)/;
 
