@@ -6,9 +6,12 @@
 </head>
 <body>
 <div id="log"></div>
-<script src="/kao-lite.js"></script>
+<!-- <script src="/kao-lite.js"></script> -->
+<script src="//10.2.146.155:4000/kao-lite.js"></script>
 <script>
-
+  kao('//10.2.146.155:4000/test/js/a.js')
+</script>
+<script>
 var log = (function () {
   var el = document.getElementById('log');
   return function (msg) {
@@ -16,6 +19,7 @@ var log = (function () {
   };
 })();
 
+//kao.add('a', {path: 'http://localhost:4000/test/js/a.js'});
 kao.add('a', {path: 'test/js/a.js'});
 kao.add('b', {path: 'test/js/b.js', requires: ['a']});
 kao.add('b2', {path: 'test/js/b.js?v=2', requires: ['a']});

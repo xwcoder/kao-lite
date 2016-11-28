@@ -6,7 +6,8 @@
     var REG_DOT_SLASH = /\/\.\//g;
     var REG_MULTI_SLASH = /([^:])\/+\//g;
     var REG_DOUBLE_SLASH = /\/[^\/]+\/\.\.\//;
-    var REG_HAS_PROTOCAL = /^[^:\/]+:\/\//;
+    var REG_HAS_EXPLICIT_PROTOCAL = /^[^:\/]+:\/\//;
+    var REG_HAS_PROTOCAL = /^(?:[a-zA-Z]+?:)?(\/\/.+?)/
     var REG_DIR_NAME = /\/[^\/]*\.[^\/]*$/;
     var REG_EXTNAME = /(\.[^\.]+)(?=[\?#]|$)/;
 
@@ -109,7 +110,8 @@
 
     var config = {
         path: (function () {
-            /^(.+?:\/\/.+?)(?:[\/\?#])/.exec(script.src);
+            ///^(.+?:\/\/.+?)(?:[\/\?#])/.exec(script.src);
+            /^(?:[a-zA-Z]+?:)?(\/\/.+?)[\/\?#]/.exec(script.src)
             return RegExp.$1;
         })()
     };
@@ -135,15 +137,20 @@
 
         var uri = uri || '';
 
-        if ( !REG_HAS_PROTOCAL.test(uri) ) {
-
+        if (!REG_HAS_PROTOCAL.test(uri)) {
             uri = config.path + '/' + uri;
-            uri = uri.replace(REG_DOT_SLASH, '/').replace(REG_MULTI_SLASH, '$1/');
-
-            while ( REG_DOUBLE_SLASH.test(uri) ) {
-                uri = uri.replace(REG_DOUBLE_SLASH, '/');
-            }
         }
+
+        uri = uri.replace(REG_DOT_SLASH, '/').replace(REG_MULTI_SLASH, '$1/');
+
+        while ( REG_DOUBLE_SLASH.test(uri) ) {
+            uri = uri.replace(REG_DOUBLE_SLASH, '/');
+        }
+
+        if (!REG_HAS_EXPLICIT_PROTOCAL.test(uri)) { //for cache key
+            uri = document.location.protocol + uri
+        }
+
         return uri;
     }
 
