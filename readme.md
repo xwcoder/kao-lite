@@ -4,7 +4,7 @@
 
 differences between kao.js:
 
-1. remove dependence on [`messagebug`](https://github.com/xwcoder/messagebus)
+1. remove dependence on [`messagebus`](https://github.com/xwcoder/messagebus)
 2. remove `coreLib`
 3. remove `DEBUG`
 4. remove `kao.logger` module
